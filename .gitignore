@@ -1,0 +1,16 @@
+# Some private files
+session.*
+*~
+.dap-breakpoints
+.last-package-update-day
+.lsp-session-v1
+tramp
+
+# And technical + private directories. Nothing to see here!
+auto-save-list/
+elpa/
+eshell/
+persp/
+saves/
+transient/
+url/
