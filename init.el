@@ -238,6 +238,8 @@
   :config
   (setq multi-term-program "/bin/bash"))
 
+(use-package php-mode)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;         Global Emacs settings           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -388,7 +390,7 @@
  '(nrepl-message-colors
    '("#dc322f" "#cb4b16" "#b58900" "#5b7300" "#b3c34d" "#0061a8" "#2aa198" "#d33682" "#6c71c4"))
  '(package-selected-packages
-   '(lsp-jedi which-key lsp-treemacs helm-lsp lsp-ui lsp-mode multi-term perspective py-autopep8 flycheck vterm tron-legacy-theme tron-legacy auto-package-update all-the-icons-dired all-the-icons-gnus all-the-icons-ibuffer all-the-icons-ivy all-the-icons-ivy-rich all-the-icons use-package sublimity solarized-theme smart-tabs-mode rust-mode reverse-im python-mode neotree magit go-mode))
+   '(php-mode lsp-jedi which-key lsp-treemacs helm-lsp lsp-ui lsp-mode multi-term perspective py-autopep8 flycheck vterm tron-legacy-theme tron-legacy auto-package-update all-the-icons-dired all-the-icons-gnus all-the-icons-ibuffer all-the-icons-ivy all-the-icons-ivy-rich all-the-icons use-package sublimity solarized-theme smart-tabs-mode rust-mode reverse-im python-mode neotree magit go-mode))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(reverse-im-input-methods '("russian-computer"))
