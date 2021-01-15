@@ -1,38 +1,6 @@
+2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; danberdev's emacs init.el ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; pipfstarrd's emacs init.el ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;     ⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢸
-;;     ⢀⢀⢀⢀⢀⢀⢀⢀⢀⡀⣠⢔⢔⣯⣷⣶⣿⡾⠿⠶⠦⠄⠈⠉⡟⠛⠓⠒⠲⠶⠦⠤⣤⣤⣀⣀⣀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢸
-;;     ⢀⢀⢀⢀⢀⢀⢀⢄⣤⣨⢬⣾⣿⠛⠋⠉⢀⢀⢀⢀⢀⢀⢀⢀⠁⢀⢀⢀⢀⢀⢀⢀⢀⢀⠈⠉⠉⠛⠛⠲⠶⢦⣤⣄⣀⢀⣼
-;;     ⢀⢀⢀⢀⢀⢀⣠⣿⣿⣿⣿⡿⠁⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⠈⠉⠛⡿⠆
-;;     ⢀⢀⢀⢀⢀⢰⣿⣿⣿⣿⠳⠁⢀⢀⢀⢀⢀⢀⠠⢀⢀⢀⢀⢀⢡⢀⢀⢀⢀⢀⢀⢀⠠⢀⢀⢀⠠⢀⢀⢀⢀⢀⢀⢀⢀⢰⡇
-;;     ⢀⢀⢀⢀⢀⣿⣿⣿⣿⣇⠃⢀⢀⢀⡀⢀⢀⠠⡁⢀⢀⢀⢀⢀⢀⡇⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢸⠁
-;;     ⢀⢀⣤⢀⣸⣿⣿⣿⣿⠸⢀⢀⢀⢀⡆⠡⢀⢀⠂⢀⢀⢀⠃⢀⢀⠍⢀⢀⢀⢀⢀⣀⣀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⡿
-;;     ⢀⢀⠋⣠⣿⣿⣿⣿⣿⡄⢀⢀⢀⢀⠁⢀⣀⡀⢀⢀⢀⢀⢈⣴⠲⠰⢤⠷⠄⢀⢀⣼⣿⣿⡆⢀⢀⢀⢀⢀⢀⢀⢀⢀⢠⡇
-;;     ⠂⢀⢠⣿⣿⣿⡿⢿⣿⠇⢀⢀⢀⢀⡴⢺⣯⠁⢀⢀⢀⢀⢸⣾⠠⢀⢸⣦⡄⢀⣴⣿⣿⡏⠁⢀⢀⢀⢀⢀⢀⢀⢀⢀⢸⠃
-;;     ⠠⠁⢸⣿⣿⣿⢀⣸⣿⢠⢀⢀⠠⠸⡟⢿⡿⢀⢀⢀⢀⢀⠈⠛⢀⢀⢸⣿⣿⣾⣿⢻⣿⣷⣄⡀⢀⢀⢀⢀⢀⢀⢀⢀⣿
-;;     ⢀⢀⣾⣿⣿⣿⣿⣿⡏⣼⢀⢀⢰⠄⠈⢀⠁⢀⢀⢀⢀⢀⢀⢀⢀⢸⢸⣿⣿⡿⢡⣿⣿⣿⣿⡇⢀⢀⢀⢀⢀⢀⢀⢀⡇
-;;     ⢀⢀⣟⣿⣿⣿⣿⣿⡇⣿⢀⢀⠸⠈⢀⢀⢀⢀⢀⡀⢀⢀⢀⢀⢀⢀⡾⣳⣿⣥⣿⣿⣿⣿⡿⠛⠄⢀⢀⢀⢀⢀⢀⢸⠃
-;;     ⢀⢀⢨⠝⠿⣿⣿⣿⣷⣽⠃⢰⢀⡀⢀⢁⢀⢀⢀⢀⢀⠈⢀⣠⣶⢀⢀⣿⣿⣿⣿⣿⣿⣿⠆⢀⣀⡆⢀⢀⢀⢀⢀⣾
-;;     ⢀⢀⢀⠈⢀⢼⢽⣿⢿⣿⢀⣼⢀⠈⠈⢀⠂⠤⢀⣀⣠⣤⣾⡇⣿⢀⠘⢀⢻⣿⣿⠿⠛⠁⢀⠪⠉⢀⢀⢀⢀⢀⢀⡏
-;;     ⢀⠠⢀⢊⠄⠨⡀⣿⠈⣟⢀⡗⢀⠘⢀⠑⢀⢀⣸⣿⣿⣿⣟⡄⢰⡆⢀⢤⣼⠋⠁⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢸⠇
-;;     ⢀⢀⢀⢀⢂⢀⡇⢻⢀⣿⡀⢀⢀⡀⠱⢀⢀⢀⣿⣿⡿⣿⣋⣠⡿⢀⢀⠈⠉⢀⢀⢀⢀⢀⢀⢀⢀⡀⢀⣄⣀⡀⣾
-;;     ⢀⢀⠈⡀⠈⢤⣿⠌⡀⡟⣇⢀⢀⢡⢀⢀⠠⣤⣈⡉⠹⣷⣾⣜⣒⡀⢀⢀⢀⢀⢀⢀⢀⢀⢀⢀⡀⠁⢀⠉⠛⠛⡿⠶⠦⡀
-;;     ⢀⢀⢀⢀⢀⠋⠁⣰⣹⣿⢿⣆⢦⣩⣧⡐⠄⠊⠿⢿⣿⣿⣿⣿⣿⣷⣄⢀⢀⣿⣿⣿⣿⣷⣶⣶⡶⠃⢀⢀⢀⢸⠁
-;;     ⢀⢀⢀⡄⢀⢀⡴⣳⣿⣿⣯⡿⣷⣭⣭⣥⣖⢀⠌⠡⠈⠛⠻⢿⣿⣿⣿⣦⣄⣿⣿⣿⣿⣿⣿⣿⠁⢀⢀⢀⢀⠘
-;;     ⢀⢀⢀⠇⢀⠞⣱⣿⣿⣿⣿⣿⣾⣽⣟⣻⣿⠦⢀⢀⠠⢈⡀⠄⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣤⡀⢀⢀⠁
-;;     ⢀⠊⢠⢀⢢⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⢀⢀⠉⠻⢢⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇
-;;     ⢀⢀⠄⢀⢈⢺⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⡠⣀⢀⣼⣿⣿⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿
-;;     ⢀⠈⠂⢀⣄⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡴⣆⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-;;     ⢠⠁⢄⢀⠈⠡⣹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟
-;;     ⢀⠂⡀⠑⢀⢀⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷
-;;     ⢀⠠⠠⢀⢀⢀⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-;;     ⢀⢀⠂⢀⢸⢀⢠⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-;;     ⢀⢀⢀⠄⠈⣠⣮⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏
-;;     ⢀⢀⢀⢀⢄⣿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿
-;;     ⢀⢀⢀⠈⡾⠁⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁
-;;     ⢀⢀⠁⢀⠁⢀⠈⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠁
-
 ;; Perfection ;;
 ;;   ⢀⣀⣠⣆⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⡀⢀⢀⢀⢀⢀⢀⢀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀
 ;;   ⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄
@@ -160,20 +128,27 @@
 
 (use-package rust-mode)
 
-(use-package tron-legacy-theme)
+(use-package tron-legacy-theme
+  :config
+  (load-theme 'tron-legacy t))
 
-;;(use-package company
-;;  :config
-;;  (add-hook 'after-init-hook 'global-company-mode)
-;;  (setq company-idle-delay 0))
+(use-package company
+  :config
+  (add-hook 'after-init-hook 'global-company-mode)
+  (setq company-idle-delay 0))
 
-;;(use-package company-jedi
-;;  :config
-;;  (defun my/python-mode-hook ()
-;;    (add-to-list 'company-backends 'company-jedi))
-;;  (add-hook 'python-mode-hook 'my/python-mode-hook)
-;;  (setq jedi:complete-on-dot t)
-;;  (add-hook 'python-mode-hook 'jedi:setup))
+(use-package company-jedi
+  :config
+  (defun my/python-mode-hook ()
+    (add-to-list 'company-backends 'company-jedi))
+  (add-hook 'python-mode-hook 'my/python-mode-hook)
+  (setq jedi:complete-on-dot t)
+  (add-hook 'python-mode-hook 'jedi:setup))
+
+(use-package flycheck-rust
+  :config
+  (with-eval-after-load 'rust-mode
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)))
 
 ;;(use-package helm-company
 ;;  :config
@@ -240,6 +215,27 @@
 
 (use-package php-mode)
 
+(use-package geben
+  :config
+  (setq geben-path-mappings '("/home/pipfstarrd/dev/webim/raiff/webim-raiff-967/php/source" "/var/www/webim/public_html")))
+
+
+;; For usage of this package you must install livedown from npm
+;; npm install -g livedown
+;;(use-package livedown
+;;  :bind ("C-M-m" . 'livedown-preview)
+;;  :config
+;;  (setq livedown-autostart t)
+;;  (setq livedown-browser firefox))
+
+(use-package yaml-mode)
+
+(use-package chess)
+
+(use-package vterm
+  :config
+  (setq vterm-max-scrollback 10000))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;         Global Emacs settings           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -262,15 +258,17 @@
 
 ;; Emacs settings
 ;; Enable line numbers
-(global-linum-mode t)
+(global-display-line-numbers-mode)
 
 ;; But with exceptions
-(add-hook 'shell-mode-hook (lambda ()
-			     (linum-mode -1)))
-(add-hook 'eshell-mode-hook (lambda ()
-			      (linum-mode -1)))
-(add-hook 'term-mode-hook (lambda ()
-			     (linum-mode -1)))
+(add-hook 'shell-mode-hook (lambda () (display-line-numbers-mode -1)))
+(add-hook 'eshell-mode-hook (lambda () (display-line-numbers-mode -1)))
+(add-hook 'term-mode-hook (lambda () (display-line-numbers-mode -1)))
+(add-hook 'Man-mode-hook (lambda () (display-line-numbers-mode -1)))
+(add-hook 'vterm-mode-hook (lambda() (display-line-numbers-mode -1)))
+(add-hook 'dired-mode-hook (lambda() (display-line-numbers-mode -1)))
+
+(electric-pair-mode)
 
 ;; Delete all trailing whitespaces, these don't belong to my files
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -288,12 +286,18 @@
   (lambda()
     (local-set-key  (kbd "C-c o") 'ff-find-other-file)))
 
-(setq-default c-basic-offset 8
-              tab-width 8
-              indent-tabs-mode t)
+(add-hook 'c++-mode-common-hook
+  (lambda()
+    (local-set-key  (kbd "C-c o") 'ff-find-other-file)))
 
-(add-hook 'c-mode-common-hook '(lambda () (c-toggle-auto-state 1)))
-(add-hook 'c-mode-common-hook '(lambda () (c-toggle-hungry-state 1)))
+(setq-default c-default-style "linux"
+	      c++-default-style "linux")
+
+;; PERFORMANCE WITH LONG LINES
+(when (>= emacs-major-version 27)
+    (global-so-long-mode 1)
+    (setq bidi-inhibit-bpa t)
+    (setq bidi-paragraph-direction 'left-to-right))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;        Appearence       ;;
@@ -309,17 +313,30 @@
 (when (fboundp 'menu-bar-mode)
   (menu-bar-mode -1))
 
+;;(setq default-frame-alist '((undecorated . t)))
+
 ;; Appearence - theme ;;
 ;; solarized ftw
-;;(load-theme 'solarized-dark t)
-;;(setq cur-theme 'solarized-dark)
-(load-theme 'tron-legacy t)
+;; (load-theme 'solarized-dark t)
+;; (setq cur-theme 'solarized-dark)
+
+;; the t parameter apends to the hook, instead of prepending
+;; this means it'd be run after other hooks that might fiddle
+;; with the frame size
+(add-hook 'window-setup-hook 'toggle-frame-maximized t)
 
 ;; Appearence - parentheses highlight
 ;; Show matching parentheses and do it without a delay
 (show-paren-mode 1)
 
+;; We don't really need startup screen
+(setq inhibit-startup-screen t)
+
+;;
 (set-face-attribute 'default nil :family "ttf-iosevka" :height 90)
+
+;; Highlight the current line
+;;(hl-line-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;            Functions               ;;
@@ -343,6 +360,7 @@
 ;; Key bindings - f6 - switch-solarized-theme
 ;;(global-set-key [f6] 'switch-solarized-theme)
 
+;; define-key TODO
 ;; Key bindings - f2 - eshell
 (global-set-key [f2] 'eshell)
 
@@ -390,7 +408,7 @@
  '(nrepl-message-colors
    '("#dc322f" "#cb4b16" "#b58900" "#5b7300" "#b3c34d" "#0061a8" "#2aa198" "#d33682" "#6c71c4"))
  '(package-selected-packages
-   '(php-mode lsp-jedi which-key lsp-treemacs helm-lsp lsp-ui lsp-mode multi-term perspective py-autopep8 flycheck vterm tron-legacy-theme tron-legacy auto-package-update all-the-icons-dired all-the-icons-gnus all-the-icons-ibuffer all-the-icons-ivy all-the-icons-ivy-rich all-the-icons use-package sublimity solarized-theme smart-tabs-mode rust-mode reverse-im python-mode neotree magit go-mode))
+   '(flycheck-rust company-jedi chess emacs-chess geben yaml-mode livedown emacs-livedown php-mode lsp-jedi which-key lsp-treemacs helm-lsp lsp-ui lsp-mode multi-term perspective py-autopep8 flycheck vterm tron-legacy-theme tron-legacy auto-package-update all-the-icons-dired all-the-icons-gnus all-the-icons-ibuffer all-the-icons-ivy all-the-icons-ivy-rich all-the-icons use-package sublimity solarized-theme smart-tabs-mode rust-mode reverse-im python-mode neotree magit go-mode))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(reverse-im-input-methods '("russian-computer"))
