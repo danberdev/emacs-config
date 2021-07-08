@@ -1,4 +1,4 @@
-2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; danberdev's emacs init.el ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Perfection ;;
@@ -107,17 +107,6 @@
   (require 'sublimity-scroll)
   (sublimity-mode 1))
 
-;; Packages - all-the-icons
-;; Nice icons for neotree
-(use-package all-the-icons)
-
-;; Packages - neotree
-;; Package neotree - show directory structure
-(use-package neotree
-  :bind ([f8] . neotree-toggle)
-  :config
- (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
-
 (use-package magit)
 
 (use-package reverse-im)
@@ -128,9 +117,9 @@
 
 (use-package rust-mode)
 
-(use-package tron-legacy-theme
-  :config
-  (load-theme 'tron-legacy t))
+;; (use-package tron-legacy-theme
+;;   :config
+;;   (load-theme 'tron-legacy t))
 
 (use-package company
   :config
@@ -144,6 +133,10 @@
   (add-hook 'python-mode-hook 'my/python-mode-hook)
   (setq jedi:complete-on-dot t)
   (add-hook 'python-mode-hook 'jedi:setup))
+
+(use-package company-qml)
+
+(use-package qml-mode)
 
 (use-package flycheck-rust
   :config
@@ -192,26 +185,21 @@
     :config
     (which-key-mode))
 
-(use-package py-autopep8)
-;; At the moment in interferes with my company's git workflow
-;; Excessive reformat on save leads to too many changes in git commits
-;;  :config
-;;  (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
+(use-package py-autopep8
+  :config
+  (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+  (setq py-autopep8-options '("--max-line-length=100")))
 
 (use-package flycheck
   :config
   (global-flycheck-mode)
   (setq flycheck-checker-error-threshold 3000))
 
-(use-package perspective
-  :config
-  (persp-mode)
-  (setq persp-state-default-file "~/.emacs.d/persp/persp-state")
-  (add-hook 'kill-emacs-hook #'persp-state-save))
-
-(use-package multi-term
-  :config
-  (setq multi-term-program "/bin/bash"))
+;; (use-package perspective
+;;   :config
+;;   (persp-mode)
+;;   (setq persp-state-default-file "~/.emacs.d/persp/persp-state")
+;;   (add-hook 'kill-emacs-hook #'persp-state-save))
 
 (use-package php-mode)
 
@@ -234,7 +222,23 @@
 
 (use-package vterm
   :config
-  (setq vterm-max-scrollback 10000))
+  (setq vterm-max-scrollback 10000)
+  (setq vterm-always-compile-module t)
+  (setq vterm-buffer-name-string "%s")
+  (add-hook 'vterm-mode-common-hook(lambda()
+    (local-set-key  (kbd "C-c C-c") 'vterm-send-C-c))))
+
+(use-package impatient-mode)
+
+(use-package gnugo)
+
+(use-package deadgrep
+  :config
+  (global-set-key (kbd "<f5>") #'deadgrep))
+
+(use-package dockerfile-mode)
+
+(use-package docker-compose-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;         Global Emacs settings           ;;
@@ -259,6 +263,9 @@
 ;; Emacs settings
 ;; Enable line numbers
 (global-display-line-numbers-mode)
+(setq column-number-mode t)
+
+(global-hl-line-mode)
 
 ;; But with exceptions
 (add-hook 'shell-mode-hook (lambda () (display-line-numbers-mode -1)))
@@ -268,6 +275,7 @@
 (add-hook 'vterm-mode-hook (lambda() (display-line-numbers-mode -1)))
 (add-hook 'dired-mode-hook (lambda() (display-line-numbers-mode -1)))
 
+;; Autocomplete any "" () [] {}
 (electric-pair-mode)
 
 ;; Delete all trailing whitespaces, these don't belong to my files
@@ -299,6 +307,17 @@
     (setq bidi-inhibit-bpa t)
     (setq bidi-paragraph-direction 'left-to-right))
 
+(defun markdown-html (buffer)
+  (princ (with-current-buffer buffer
+	   (format "<!DOCTYPE html><html><title>Impatient Markdown</title>
+<xmp theme=\"united\" style=\"display:none;\"> %s </xmp>
+<script src=\"http://strapdownjs.com/v/0.2/strapdown.js\"></script></html>"
+		   (buffer-substring-no-properties (point-min) (point-max))))
+	 (current-buffer)))
+
+(defun turn-off-indent-tabs-mode ()
+  (setq indent-tabs-mode nil))
+(add-hook 'sh-mode-hook #'turn-off-indent-tabs-mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;        Appearence       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -317,13 +336,13 @@
 
 ;; Appearence - theme ;;
 ;; solarized ftw
-;; (load-theme 'solarized-dark t)
-;; (setq cur-theme 'solarized-dark)
+(load-theme 'solarized-dark t)
+(setq cur-theme 'solarized-dark)
 
 ;; the t parameter apends to the hook, instead of prepending
 ;; this means it'd be run after other hooks that might fiddle
 ;; with the frame size
-(add-hook 'window-setup-hook 'toggle-frame-maximized t)
+;; (add-hook 'window-setup-hook 'toggle-frame-maximized t)
 
 ;; Appearence - parentheses highlight
 ;; Show matching parentheses and do it without a delay
@@ -332,7 +351,7 @@
 ;; We don't really need startup screen
 (setq inhibit-startup-screen t)
 
-;;
+;; Fonts
 (set-face-attribute 'default nil :family "ttf-iosevka" :height 90)
 
 ;; Highlight the current line
@@ -343,26 +362,40 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Functions - switch-solarized-theme
-;;(defun switch-solarized-theme ()
-;;  "Toggles the solarized theme in use between dark/light"
-;;  (interactive)
-;;   (if (eq cur-theme 'solarized-dark)
-;;      (progn (load-theme 'solarized-light t)
-;;       (setq cur-theme 'solarized-light))
-;;    (progn (load-theme 'solarized-dark t)
-;;     (setq cur-theme 'solarized-dark))))
+(defun switch-solarized-theme ()
+ "Toggles the solarized theme in use between dark/light"
+ (interactive)
+  (if (eq cur-theme 'solarized-dark)
+     (progn (load-theme 'solarized-light t)
+      (setq cur-theme 'solarized-light))
+   (progn (load-theme 'solarized-dark t)
+    (setq cur-theme 'solarized-dark))))
+
+;; Functions - live-markdown
+(defun live-markdown ()
+  "Enables live previes of markdown buffer"
+  (interactive)
+  (httpd-start)
+  (impatient-mode)
+  (imp-set-user-filter 'markdown-html))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;          Key bindings              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Key bindings - f6 - switch-solarized-theme
-;;(global-set-key [f6] 'switch-solarized-theme)
+;;Key bindings - f6 - switch-solarized-theme
+(global-set-key [f6] 'switch-solarized-theme)
+
+(defun custom/vterm ()
+    "Wrapper around `vterm' function to return it's previous functionality."
+    (interactive)
+    (vterm "*vterm*"))
 
 ;; define-key TODO
 ;; Key bindings - f2 - eshell
-(global-set-key [f2] 'eshell)
+(global-set-key [f2] 'custom/vterm)
+
 
 ;; Key bindings - c-x n / c-x p - next/prev buffer
 (global-set-key (kbd "C-x n") 'next-buffer)
@@ -370,79 +403,13 @@
 
 ;; Whitespace on/off
 (global-set-key (kbd "C-x w") 'whitespace-mode)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-   ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#657b83"])
- '(compilation-message-face 'default)
- '(cua-global-mark-cursor-color "#2aa198")
- '(cua-normal-cursor-color "#839496")
- '(cua-overwrite-cursor-color "#b58900")
- '(cua-read-only-cursor-color "#859900")
- '(custom-safe-themes
-   '("c433c87bd4b64b8ba9890e8ed64597ea0f8eb0396f4c9a9e01bd20a04d15d358" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "d0aa1464d7e55d18ca1e0381627fac40229b9a24bca2a3c1db8446482ce8185e" default))
- '(fci-rule-color "#073642")
- '(highlight-changes-colors '("#d33682" "#6c71c4"))
- '(highlight-symbol-colors
-   '("#3b2b40b432a1" "#07ab45f64ce9" "#475733ea3554" "#1d623c04567f" "#2d5343d8332c" "#436f35f73166" "#0613413e597e"))
- '(highlight-symbol-foreground-color "#93a1a1")
- '(highlight-tail-colors
-   '(("#073642" . 0)
-     ("#5b7300" . 20)
-     ("#007d76" . 30)
-     ("#0061a8" . 50)
-     ("#866300" . 60)
-     ("#992700" . 70)
-     ("#a00559" . 85)
-     ("#073642" . 100)))
- '(hl-bg-colors
-   '("#866300" "#992700" "#a7020a" "#a00559" "#243e9b" "#0061a8" "#007d76" "#5b7300"))
- '(hl-fg-colors
-   '("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36"))
- '(hl-paren-colors '("#2aa198" "#b58900" "#268bd2" "#6c71c4" "#859900"))
- '(lsp-ui-doc-border "#93a1a1")
- '(nrepl-message-colors
-   '("#dc322f" "#cb4b16" "#b58900" "#5b7300" "#b3c34d" "#0061a8" "#2aa198" "#d33682" "#6c71c4"))
  '(package-selected-packages
-   '(flycheck-rust company-jedi chess emacs-chess geben yaml-mode livedown emacs-livedown php-mode lsp-jedi which-key lsp-treemacs helm-lsp lsp-ui lsp-mode multi-term perspective py-autopep8 flycheck vterm tron-legacy-theme tron-legacy auto-package-update all-the-icons-dired all-the-icons-gnus all-the-icons-ibuffer all-the-icons-ivy all-the-icons-ivy-rich all-the-icons use-package sublimity solarized-theme smart-tabs-mode rust-mode reverse-im python-mode neotree magit go-mode))
- '(pos-tip-background-color "#073642")
- '(pos-tip-foreground-color "#93a1a1")
- '(reverse-im-input-methods '("russian-computer"))
- '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
- '(term-default-bg-color "#002b36")
- '(term-default-fg-color "#839496")
- '(vc-annotate-background nil)
- '(vc-annotate-background-mode nil)
- '(vc-annotate-color-map
-   '((20 . "#dc322f")
-     (40 . "#ca7966832090")
-     (60 . "#c05578c91534")
-     (80 . "#b58900")
-     (100 . "#a6088eed0000")
-     (120 . "#9e3a91a60000")
-     (140 . "#9628943b0000")
-     (160 . "#8dc596ad0000")
-     (180 . "#859900")
-     (200 . "#76ef9b6045e8")
-     (220 . "#6cd69ca95b9d")
-     (240 . "#5f5f9e06701f")
-     (260 . "#4c1a9f778424")
-     (280 . "#2aa198")
-     (300 . "#3002984eaf4d")
-     (320 . "#2f6f93e8bae0")
-     (340 . "#2c598f79c66f")
-     (360 . "#268bd2")))
- '(vc-annotate-very-old-color nil)
- '(weechat-color-list
-   '(unspecified "#002b36" "#073642" "#a7020a" "#dc322f" "#5b7300" "#859900" "#866300" "#b58900" "#0061a8" "#268bd2" "#a00559" "#d33682" "#007d76" "#2aa198" "#839496" "#657b83"))
- '(xterm-color-names
-   ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#eee8d5"])
- '(xterm-color-names-bright
-   ["#002b36" "#cb4b16" "#586e75" "#657b83" "#839496" "#6c71c4" "#93a1a1" "#fdf6e3"]))
+   '(company-qml docker-compose-mode dockerfile-mode deadgrep gnugo impatient-mode vterm chess yaml-mode geben php-mode perspective py-autopep8 which-key dap-mode flycheck-rust company rust-mode solarized-theme smart-tabs-mode magit sublimity reverse-im use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
