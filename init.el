@@ -115,6 +115,8 @@
 ;;   :config
 ;;   (load-theme 'tron-legacy t))
 
+(use-package helm)
+
 (use-package company
   :config
   (add-hook 'after-init-hook 'global-company-mode)
@@ -137,10 +139,10 @@
   (with-eval-after-load 'rust-mode
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)))
 
-;;(use-package helm-company
-;;  :config
-;;  (define-key company-mode-map (kbd "C-:") 'helm-company)
-;;  (define-key company-active-map (kbd "C-:") 'helm-company))
+(use-package helm-company
+ :config
+ (define-key company-mode-map (kbd "C-:") 'helm-company)
+ (define-key company-active-map (kbd "C-:") 'helm-company))
 
 ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
 (setq lsp-keymap-prefix "C-с l")
@@ -167,7 +169,7 @@
 ;; optionally
 (use-package lsp-ui :commands lsp-ui-mode)
 ;; if you are helm user
-;;(use-package helm-lsp :commands helm-lsp-workspace-symbol)
+(use-package helm-lsp :commands helm-lsp-workspace-symbol)
 ;; if you are ivy user
 ;;(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 ;;(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
