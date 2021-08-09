@@ -30,7 +30,6 @@
 ;; -* TABLE OF CONTENTS *- ;;
 
 ;; - Packages
-;; -- Packages - MELPA
 ;; -- Packages - package-list
 ;; -- Packages - use-package init
 ;; -- Packages - reverse-im
@@ -64,6 +63,8 @@
 
 ;; Prevent package.el loading packages prior to init-file loading
 (setq package-enable-at-startup nil)
+
+;; Use freash straight version
 (setq straight-repository-branch "develop")
 
 ;; Automatically install any missing packages
@@ -82,19 +83,8 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;; fetch the list of packages available
-;;(unless package-archive-contents
-;;  (package-refresh-contents))
-
 ;; Packages - use-package init ;;
 (straight-use-package 'use-package)
-
-;; Keep them up-to-date
-;;(use-package auto-package-update
-;;  :config
-;;  (setq auto-package-update-delete-old-versions t)
-;;  (setq auto-package-update-hide-results t)
-;;  (auto-package-update-maybe))
 
 ;; Packages - reverse-im
 ;; Package reverse-im - translate Russian input into English
@@ -332,8 +322,8 @@
 
 ;; Appearence - theme ;;
 ;; solarized ftw
-(load-theme 'solarized-dark t)
-(setq cur-theme 'solarized-dark)
+(load-theme 'solarized t)
+(setq cur-theme 'solarized)
 
 ;; the t parameter apends to the hook, instead of prepending
 ;; this means it'd be run after other hooks that might fiddle
@@ -369,10 +359,12 @@
  "Toggles the solarized theme in use between dark/light"
  (interactive)
   (if (eq cur-theme 'solarized-dark)
-     (progn (load-theme 'solarized-light t)
-      (setq cur-theme 'solarized-light))
-   (progn (load-theme 'solarized-dark t)
-    (setq cur-theme 'solarized-dark))))
+      (progn (setq frame-background-mode 'light)
+	     (load-theme 'solarized t)
+	     (setq cur-theme 'solarized-light))
+    (progn (setq frame-background-mode 'dark)
+	   (load-theme 'solarized t)
+	   (setq cur-theme 'solarized-dark))))
 
 ;; Functions - live-markdown
 (defun live-markdown ()
