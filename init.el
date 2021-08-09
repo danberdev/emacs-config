@@ -85,7 +85,7 @@
 ;;  (package-refresh-contents))
 
 ;; Packages - use-package init ;;
-(eval-when-compile (require 'use-package))
+(straight-use-package 'use-package)
 
 ;; Auto install packages
 (require 'use-package-ensure)
