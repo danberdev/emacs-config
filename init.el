@@ -65,6 +65,8 @@
 ;; Prevent package.el loading packages prior to init-file loading
 (setq package-enable-at-startup nil)
 (setq straight-repository-branch "develop")
+
+;; Automatically install any missing packages
 (setq straight-use-package-by-default t)
 
 (defvar bootstrap-version)
@@ -86,10 +88,6 @@
 
 ;; Packages - use-package init ;;
 (straight-use-package 'use-package)
-
-;; Auto install packages
-(require 'use-package-ensure)
-(setq use-package-always-ensure t)
 
 ;; Keep them up-to-date
 ;;(use-package auto-package-update
@@ -119,7 +117,7 @@
 
 (use-package smart-tabs-mode)
 
-(use-package solarized-theme)
+(use-package color-theme-solarized)
 
 (use-package rust-mode)
 
