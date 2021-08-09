@@ -62,17 +62,23 @@
 ;;               Packages                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Packages - MELPA ;;
-;; Adding and activating MELPA with a warning
-(require 'package)
-(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                    (not (gnutls-available-p))))
-       (proto (if no-ssl "http" "https")))
-  (when no-ssl (warn "Your version of Emacs does not support SSL connections."))
-  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t))
+;; Prevent package.el loading packages prior to init-file loading
+(setq package-enable-at-startup nil)
+(setq straight-repository-branch "develop")
+(setq straight-use-package-by-default t)
 
-;; activate all the packages (in particular autoloads)
-(package-initialize)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
 ;; fetch the list of packages available
 ;;(unless package-archive-contents
@@ -149,27 +155,29 @@
 ;;  (define-key company-active-map (kbd "C-:") 'helm-company))
 
 ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-;;(setq lsp-keymap-prefix "C-l")
+(setq lsp-keymap-prefix "C-с l")
 
-;;(use-package lsp-mode
-;;    :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-;;           (python-mode . lsp)
-;;	   (cc-mode . lsp)
-;;	   (go-mode . lsp)
-;;	   (rust-mode . lsp)
+(use-package lsp-mode
+   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+          (python-mode . lsp)
+	   (cc-mode . lsp)
+	   (go-mode . lsp)
+	   (rust-mode . lsp)
 	   ;; if you want which-key integration
-;;            (lsp-mode . lsp-enable-which-key-integration))
-;;    :commands lsp)
+           (lsp-mode . lsp-enable-which-key-integration))
+   :commands lsp)
 
-;;(use-package lsp-jedi
-;;  :ensure t
-;;  :config
-;;  (with-eval-after-load "lsp-mode"
-;;    (add-to-list 'lsp-disabled-clients 'pyls)
-;;    (add-to-list 'lsp-enabled-clients 'jedi)))
+(use-package lsp-jedi
+ :ensure t
+ :config
+ (with-eval-after-load "lsp-mode"
+   (add-to-list 'lsp-disabled-clients 'pyls)
+   (add-to-list 'lsp-enabled-clients 'jedi)))
+
+(use-package lsp-treemacs)
 
 ;; optionally
-;;(use-package lsp-ui :commands lsp-ui-mode)
+(use-package lsp-ui :commands lsp-ui-mode)
 ;; if you are helm user
 ;;(use-package helm-lsp :commands helm-lsp-workspace-symbol)
 ;; if you are ivy user
@@ -206,15 +214,6 @@
 (use-package geben
   :config
   (setq geben-path-mappings '("/home/pipfstarrd/dev/webim/raiff/webim-raiff-967/php/source" "/var/www/webim/public_html")))
-
-
-;; For usage of this package you must install livedown from npm
-;; npm install -g livedown
-;;(use-package livedown
-;;  :bind ("C-M-m" . 'livedown-preview)
-;;  :config
-;;  (setq livedown-autostart t)
-;;  (setq livedown-browser firefox))
 
 (use-package yaml-mode)
 
@@ -265,7 +264,6 @@
 (global-display-line-numbers-mode)
 (setq column-number-mode t)
 
-(global-hl-line-mode)
 
 ;; But with exceptions
 (add-hook 'shell-mode-hook (lambda () (display-line-numbers-mode -1)))
@@ -354,8 +352,15 @@
 ;; Fonts
 (set-face-attribute 'default nil :family "ttf-iosevka" :height 90)
 
+;; Emoji: 😄, 🤦, 🏴󠁧󠁢󠁳󠁣󠁴󠁿
+(set-fontset-font t 'symbol "Apple Color Emoji")
+(set-fontset-font t 'symbol "Noto Color Emoji" nil 'append)
+(set-fontset-font t 'symbol "Segoe UI Emoji" nil 'append)
+(set-fontset-font t 'symbol "Symbola" nil 'append)
+
 ;; Highlight the current line
-;;(hl-line-mode)
+(global-hl-line-mode)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;            Functions               ;;
@@ -403,13 +408,15 @@
 
 ;; Whitespace on/off
 (global-set-key (kbd "C-x w") 'whitespace-mode)
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(company-qml docker-compose-mode dockerfile-mode deadgrep gnugo impatient-mode vterm chess yaml-mode geben php-mode perspective py-autopep8 which-key dap-mode flycheck-rust company rust-mode solarized-theme smart-tabs-mode magit sublimity reverse-im use-package)))
+   '(lsp-ui lsp-jedi company-qml docker-compose-mode dockerfile-mode deadgrep gnugo impatient-mode vterm chess yaml-mode geben php-mode perspective py-autopep8 which-key dap-mode flycheck-rust company rust-mode solarized-theme smart-tabs-mode magit sublimity reverse-im use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
