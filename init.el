@@ -144,21 +144,20 @@
  (define-key company-mode-map (kbd "C-:") 'helm-company)
  (define-key company-active-map (kbd "C-:") 'helm-company))
 
-;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-(setq lsp-keymap-prefix "C-с l")
-
 (use-package lsp-mode
-   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-          (python-mode . lsp)
-	   (cc-mode . lsp)
-	   (go-mode . lsp)
-	   (rust-mode . lsp)
-	   ;; if you want which-key integration
-           (lsp-mode . lsp-enable-which-key-integration))
-   :commands lsp)
+  :hook ((python-mode . lsp)
+	 (cc-mode . lsp)
+	 (go-mode . lsp)
+	 (rust-mode . lsp)
+	 ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :hook (lsp-mode . (lambda ()
+		      let ((lsp-keymap-prefix "C-c l"))
+		      (lsp-enable-which-key-integration)))
+  :config (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
+  :commands lsp)
 
 (use-package lsp-jedi
- :ensure t
  :config
  (with-eval-after-load "lsp-mode"
    (add-to-list 'lsp-disabled-clients 'pyls)
@@ -228,6 +227,11 @@
 (use-package dockerfile-mode)
 
 (use-package docker-compose-mode)
+
+(use-package projectile
+  :config
+  (projectile-mode +1)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;         Global Emacs settings           ;;

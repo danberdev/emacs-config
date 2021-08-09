@@ -5,6 +5,7 @@ session.*
 .last-package-update-day
 .lsp-session-v1
 tramp
+projectile-bookmarks.eld
 
 # And technical + private directories. Nothing to see here!
 auto-save-list/
