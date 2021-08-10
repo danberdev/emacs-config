@@ -61,15 +61,17 @@
 ;;               Packages                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Prevent package.el loading packages prior to init-file loading
+;; Packages — straight configuration
+;;;; Prevent package.el loading packages prior to init-file loading
 (setq package-enable-at-startup nil)
 
-;; Use freash straight version
+;;;; Use freash straight version
 (setq straight-repository-branch "develop")
 
-;; Automatically install any missing packages
+;;;; Automatically install any missing packages
 (setq straight-use-package-by-default t)
 
+;;;; Bootstrap straight
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -83,66 +85,42 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;; Packages - use-package init ;;
+
+;; Packages - use-package installation
 (straight-use-package 'use-package)
 
 ;; Packages - reverse-im
-;; Package reverse-im - translate Russian input into English
+;;;; Package reverse-im - translate Russian input into English
 (use-package reverse-im
   :custom
   (reverse-im-input-methods '("russian-computer"))
   :config
   (reverse-im-mode t))
 
-;; Packages - sublimity
-;; Package sublimity - show minimap of the file
-(use-package sublimity
-  :config
-  (require 'sublimity-scroll)
-  (sublimity-mode 1))
-
+;; Packages — VC wrapper for git
 (use-package magit)
 
+;; Packages — support local language autokeybindings
 (use-package reverse-im)
 
-(use-package smart-tabs-mode)
-
-(use-package color-theme-solarized)
-
+;; Packages - Language modes
 (use-package rust-mode)
-
-;; (use-package tron-legacy-theme
-;;   :config
-;;   (load-theme 'tron-legacy t))
-
-(use-package helm)
-
-(use-package company
-  :config
-  (add-hook 'after-init-hook 'global-company-mode)
-  (setq company-idle-delay 0))
-
-(use-package company-jedi
-  :config
-  (defun my/python-mode-hook ()
-    (add-to-list 'company-backends 'company-jedi))
-  (add-hook 'python-mode-hook 'my/python-mode-hook)
-  (setq jedi:complete-on-dot t)
-  (add-hook 'python-mode-hook 'jedi:setup))
-
-(use-package company-qml)
-
 (use-package qml-mode)
+(use-package php-mode)
+(use-package yaml-mode)
+(use-package dockerfile-mode)
+(use-package docker-compose-mode)
 
-(use-package flycheck-rust
-  :config
-  (with-eval-after-load 'rust-mode
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)))
+;; Packages - Color Themes
+(use-package color-theme-solarized)
+(use-package tron-legacy-theme)
 
-(use-package helm-company
- :config
- (define-key company-mode-map (kbd "C-:") 'helm-company)
- (define-key company-active-map (kbd "C-:") 'helm-company))
+;; Packages — completion
+;;; Helm framework
+(use-package helm)
+(use-package helm-lsp :commands helm-lsp-workspace-symbol)
+
+(use-package flycheck)
 
 (use-package lsp-mode
   :hook ((python-mode . lsp)
@@ -165,17 +143,7 @@
 
 (use-package lsp-treemacs)
 
-;; optionally
 (use-package lsp-ui :commands lsp-ui-mode)
-;; if you are helm user
-(use-package helm-lsp :commands helm-lsp-workspace-symbol)
-;; if you are ivy user
-;;(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-;;(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
-
-;; optionally if you want to use debugger
-(use-package dap-mode)
-;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
 ;; optional if you want which-key integration
 (use-package which-key
@@ -187,27 +155,6 @@
   (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
   (setq py-autopep8-options '("--max-line-length=100")))
 
-(use-package flycheck
-  :config
-  (global-flycheck-mode)
-  (setq flycheck-checker-error-threshold 3000))
-
-;; (use-package perspective
-;;   :config
-;;   (persp-mode)
-;;   (setq persp-state-default-file "~/.emacs.d/persp/persp-state")
-;;   (add-hook 'kill-emacs-hook #'persp-state-save))
-
-(use-package php-mode)
-
-(use-package geben
-  :config
-  (setq geben-path-mappings '("/home/pipfstarrd/dev/webim/raiff/webim-raiff-967/php/source" "/var/www/webim/public_html")))
-
-(use-package yaml-mode)
-
-(use-package chess)
-
 (use-package vterm
   :config
   (setq vterm-max-scrollback 10000)
@@ -218,20 +165,19 @@
 
 (use-package impatient-mode)
 
-(use-package gnugo)
-
 (use-package deadgrep
   :config
   (global-set-key (kbd "<f5>") #'deadgrep))
-
-(use-package dockerfile-mode)
-
-(use-package docker-compose-mode)
 
 (use-package projectile
   :config
   (projectile-mode +1)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+
+
+;; Packages — games
+(use-package chess)
+(use-package gnugo)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;         Global Emacs settings           ;;
@@ -310,6 +256,7 @@
 (defun turn-off-indent-tabs-mode ()
   (setq indent-tabs-mode nil))
 (add-hook 'sh-mode-hook #'turn-off-indent-tabs-mode)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;        Appearence       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -324,12 +271,11 @@
 (when (fboundp 'menu-bar-mode)
   (menu-bar-mode -1))
 
-;;(setq default-frame-alist '((undecorated . t)))
-
 ;; Appearence - theme ;;
 ;; solarized ftw
-(load-theme 'solarized t)
-(setq cur-theme 'solarized)
+;; (load-theme 'solarized t)
+;; (setq cur-theme 'solarized)
+(load-theme 'tron-legacy)
 
 ;; the t parameter apends to the hook, instead of prepending
 ;; this means it'd be run after other hooks that might fiddle
@@ -411,6 +357,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("c85514b33ffedb58963da19bedac23e370a52822f548f9c8a18f34afd33f8c63" default))
  '(package-selected-packages
    '(lsp-ui lsp-jedi company-qml docker-compose-mode dockerfile-mode deadgrep gnugo impatient-mode vterm chess yaml-mode geben php-mode perspective py-autopep8 which-key dap-mode flycheck-rust company rust-mode solarized-theme smart-tabs-mode magit sublimity reverse-im use-package)))
 (custom-set-faces
