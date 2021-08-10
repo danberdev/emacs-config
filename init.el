@@ -66,10 +66,10 @@
 (setq package-enable-at-startup nil)
 
 ;;;; Use freash straight version
-(setq straight-repository-branch "develop")
+(defvar straight-repository-branch "develop")
 
 ;;;; Automatically install any missing packages
-(setq straight-use-package-by-default t)
+(defvar straight-use-package-by-default t)
 
 ;;;; Bootstrap straight
 (defvar bootstrap-version)
@@ -100,8 +100,6 @@
 ;; Packages — VC wrapper for git
 (use-package magit)
 
-;; Packages — support local language autokeybindings
-(use-package reverse-im)
 
 ;; Packages - Language modes
 (use-package rust-mode)
@@ -358,7 +356,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("c85514b33ffedb58963da19bedac23e370a52822f548f9c8a18f34afd33f8c63" default))
+   '("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "c85514b33ffedb58963da19bedac23e370a52822f548f9c8a18f34afd33f8c63" default))
  '(package-selected-packages
    '(lsp-ui lsp-jedi company-qml docker-compose-mode dockerfile-mode deadgrep gnugo impatient-mode vterm chess yaml-mode geben php-mode perspective py-autopep8 which-key dap-mode flycheck-rust company rust-mode solarized-theme smart-tabs-mode magit sublimity reverse-im use-package)))
 (custom-set-faces
