@@ -119,16 +119,7 @@
   ;; (setq lsp-signature-auto-activate nil)
 
   ;; comment to disable rustfmt on save
-  (setq rustic-format-on-save t)
-  (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
-
-(defun rk/rustic-mode-hook ()
-  ;; so that run C-c C-c C-r works without having to confirm, but don't try to
-  ;; save rust buffers that are not file visiting. Once
-  ;; https://github.com/brotzeit/rustic/issues/253 has been resolved this should
-  ;; no longer be necessary.
-  (when buffer-file-name
-    (setq-local buffer-save-without-query t)))
+  (setq rustic-format-on-save t))
 
 (use-package qml-mode)
 (use-package php-mode)
@@ -139,8 +130,6 @@
 ;; Packages - Color Themes
 (use-package color-theme-solarized)
 (use-package tron-legacy-theme)
-
-(use-package powerline)
 
 ;; Packages — completion
 ;;; Helm framework
@@ -167,19 +156,18 @@
   :hook ((python-mode . lsp)
 	 (cc-mode . lsp)
 	 (go-mode . lsp)
-	 (rust-mode . lsp)
-	 ;; if you want which-key integration
+	 (rustic-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :config (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
+  (setq lsp-headerline-breadcrumb-enable nil)
   :commands lsp)
 
-(use-package lsp-jedi
- :config
- (with-eval-after-load "lsp-mode"
-   (add-to-list 'lsp-disabled-clients 'pyls)
-   (add-to-list 'lsp-enabled-clients 'jedi)))
-
-(use-package lsp-treemacs)
+(use-package lsp-python-ms
+  :ensure t
+  :init (setq lsp-python-ms-auto-install-server t)
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-python-ms)
+                          (lsp))))
 
 ;; optional if you want which-key integration
 (use-package which-key
@@ -241,11 +229,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;         Global Emacs settings           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Preferred tab width
-(setq custom-tab-width 8)
-
-;;(smart-tabs-insinuate 'c 'javascript)
-
 ;; Forcebackup framework for keeping backup files in sane place
 (setq
    backup-by-copying t      ; don't clobber symlinks
@@ -296,7 +279,7 @@
     (local-set-key  (kbd "C-c o") 'ff-find-other-file)))
 
 (setq-default c-default-style "linux"
-	      c++-default-style "linux")
+              c++-default-style "linux")
 
 ;; PERFORMANCE WITH LONG LINES
 (when (>= emacs-major-version 27)
@@ -306,15 +289,23 @@
 
 (defun markdown-html (buffer)
   (princ (with-current-buffer buffer
-	   (format "<!DOCTYPE html><html><title>Impatient Markdown</title>
+           (format "<!DOCTYPE html><html><title>Impatient Markdown</title>
 <xmp theme=\"united\" style=\"display:none;\"> %s </xmp>
 <script src=\"http://strapdownjs.com/v/0.2/strapdown.js\"></script></html>"
-		   (buffer-substring-no-properties (point-min) (point-max))))
-	 (current-buffer)))
+                   (buffer-substring-no-properties (point-min) (point-max))))
+         (current-buffer)))
 
 (defun turn-off-indent-tabs-mode ()
   (setq indent-tabs-mode nil))
 (add-hook 'sh-mode-hook #'turn-off-indent-tabs-mode)
+(add-hook 'lisp-mode-hook #'turn-off-indent-tabs-mode)
+(add-hook 'emacs-lisp-mode-hook #'turn-off-indent-tabs-mode)
+(add-hook 'rustic-mode-hook #'turn-off-indent-tabs-mode)
+
+(defun set-tab-width (width)
+  (setq tab-width width))
+(add-hook 'rustic-mode-hook (apply-partially #'set-tab-width 4))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;        Appearence       ;;
@@ -335,8 +326,6 @@
 ;; (load-theme 'solarized t)
 ;; (setq cur-theme 'solarized)
 (load-theme 'tron-legacy t)
-
-(powerline-default-theme)
 
 ;; the t parameter apends to the hook, instead of prepending
 ;; this means it'd be run after other hooks that might fiddle
