@@ -301,10 +301,12 @@
 (add-hook 'lisp-mode-hook #'turn-off-indent-tabs-mode)
 (add-hook 'emacs-lisp-mode-hook #'turn-off-indent-tabs-mode)
 (add-hook 'rustic-mode-hook #'turn-off-indent-tabs-mode)
+(add-hook 'qml-mode-hook #'turn-off-indent-tabs-mode)
 
 (defun set-tab-width (width)
   (setq tab-width width))
 (add-hook 'rustic-mode-hook (apply-partially #'set-tab-width 4))
+(add-hook 'qml-mode-hook (apply-partially #'set-tab-width 4))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -340,6 +342,8 @@
 (setq inhibit-startup-screen t)
 
 ;; Fonts
+;; 90 for scaled sessions
+;; 120 for X270 on gnome at 100%
 (set-face-attribute 'default nil :family "ttf-iosevka" :height 90)
 
 ;; Emoji: 😄, 🤦, 🏴󠁧󠁢󠁳󠁣󠁴󠁿
