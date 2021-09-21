@@ -154,9 +154,9 @@
 
 (use-package lsp-mode
   :hook ((python-mode . lsp)
-	 (cc-mode . lsp)
-	 (go-mode . lsp)
-	 (rustic-mode . lsp)
+         (cc-mode . lsp)
+         (go-mode . lsp)
+         (rustic-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :config (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
   (setq lsp-headerline-breadcrumb-enable nil)
@@ -217,7 +217,7 @@
    (list :type "lldb"
          :request "launch"
          :name "LLDB::Run"
-	 :gdbpath "rust-lldb"
+         :gdbpath "rust-lldb"
          :target nil
          :cwd nil)))
 
@@ -343,8 +343,9 @@
 
 ;; Fonts
 ;; 90 for scaled sessions
+;; 110 for T480 1920*1080 at 100%
 ;; 120 for X270 on gnome at 100%
-(set-face-attribute 'default nil :family "ttf-iosevka" :height 90)
+(set-face-attribute 'default nil :family "ttf-iosevka" :height 110)
 
 ;; Emoji: 😄, 🤦, 🏴󠁧󠁢󠁳󠁣󠁴󠁿
 (set-fontset-font t 'symbol "Apple Color Emoji")
@@ -366,11 +367,11 @@
  (interactive)
   (if (eq cur-theme 'solarized-dark)
       (progn (setq frame-background-mode 'light)
-	     (load-theme 'solarized t)
-	     (setq cur-theme 'solarized-light))
+             (load-theme 'solarized t)
+             (setq cur-theme 'solarized-light))
     (progn (setq frame-background-mode 'dark)
-	   (load-theme 'solarized t)
-	   (setq cur-theme 'solarized-dark))))
+           (load-theme 'solarized t)
+           (setq cur-theme 'solarized-dark))))
 
 ;; Functions - live-markdown
 (defun live-markdown ()
