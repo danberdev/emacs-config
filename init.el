@@ -281,7 +281,6 @@
 (global-display-line-numbers-mode)
 (setq column-number-mode t)
 
-
 ;; But with exceptions
 (add-hook 'shell-mode-hook (lambda () (display-line-numbers-mode -1)))
 (add-hook 'eshell-mode-hook (lambda () (display-line-numbers-mode -1)))
@@ -387,7 +386,6 @@
 
 ;; Highlight the current line
 (global-hl-line-mode)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;            Functions               ;;
