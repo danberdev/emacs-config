@@ -155,6 +155,7 @@
 (use-package lsp-mode
   :hook ((python-mode . lsp)
          (cc-mode . lsp)
+         (c++-mode . lsp)
          (go-mode . lsp)
          (rustic-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
