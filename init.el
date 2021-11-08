@@ -175,10 +175,12 @@
     :config
     (which-key-mode))
 
-(use-package py-autopep8
+(use-package python-black
+  :demand t
+  :after python
+  :hook (python-mode . python-black-on-save-mode)
   :config
-  (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
-  (setq py-autopep8-options '("--max-line-length=100")))
+  (setq python-black-extra-args '("-l" "100")))
 
 (use-package vterm
   :config
