@@ -222,10 +222,44 @@
          :target nil
          :cwd nil)))
 
+(use-package clang-format+
+  :config
+  (setq clang-format+-always-enable t)
+  (setq-default clang-format-style "llvm")
+  (fset 'c-indent-region 'clang-format-region)
+  (add-hook 'c-mode-common-hook (lambda () #'(local-set-key  (kbd "C-M-\\") 'clang-format-region)))
+  (add-hook 'c-mode-common-hook (lambda () #'(local-set-key  (kbd "C-i") 'clang-format)))
+  :hook (c-mode-common . clang-format+-mode))
 
 ;; Packages — games
 (use-package chess)
 (use-package gnugo)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; LLVM coding style guidelines in emacs
+;; Maintainer: LLVM Team, http://llvm.org/
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun llvm-lineup-statement (langelem)
+  (let ((in-assign (c-lineup-assignments langelem)))
+    (if (not in-assign)
+        '++
+      (aset in-assign 0
+            (+ (aref in-assign 0)
+               (* 2 c-basic-offset)))
+      in-assign)))
+
+;; Add a cc-mode style for editing LLVM C and C++ code
+(c-add-style "llvm.org"
+             '("gnu"
+	       (fill-column . 80)
+	       (c++-indent-level . 2)
+	       (c-basic-offset . 2)
+	       (indent-tabs-mode . nil)
+	       (c-offsets-alist . ((arglist-intro . ++)
+				   (innamespace . 0)
+				   (member-init-intro . ++)
+				   (statement-cont . llvm-lineup-statement)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;         Global Emacs settings           ;;
@@ -275,12 +309,22 @@
   (lambda()
     (local-set-key  (kbd "C-c o") 'ff-find-other-file)))
 
-(add-hook 'c++-mode-common-hook
-  (lambda()
-    (local-set-key  (kbd "C-c o") 'ff-find-other-file)))
+(setq c-default-style "llvm.org")
 
-(setq-default c-default-style "linux"
-              c++-default-style "linux")
+(defun turn-off-indent-tabs-mode ()
+  (setq indent-tabs-mode nil))
+(add-hook 'sh-mode-hook #'turn-off-indent-tabs-mode)
+(add-hook 'lisp-mode-hook #'turn-off-indent-tabs-mode)
+(add-hook 'emacs-lisp-mode-hook #'turn-off-indent-tabs-mode)
+(add-hook 'rustic-mode-hook #'turn-off-indent-tabs-mode)
+(add-hook 'qml-mode-hook #'turn-off-indent-tabs-mode)
+
+(defun set-tab-width (width)
+  (setq tab-width width))
+(add-hook 'rustic-mode-hook (apply-partially #'set-tab-width 4))
+(add-hook 'qml-mode-hook (apply-partially #'set-tab-width 4))
+
+(global-set-key "\C-m" 'newline-and-indent)
 
 ;; PERFORMANCE WITH LONG LINES
 (when (>= emacs-major-version 27)
@@ -295,19 +339,6 @@
 <script src=\"http://strapdownjs.com/v/0.2/strapdown.js\"></script></html>"
                    (buffer-substring-no-properties (point-min) (point-max))))
          (current-buffer)))
-
-(defun turn-off-indent-tabs-mode ()
-  (setq indent-tabs-mode nil))
-(add-hook 'sh-mode-hook #'turn-off-indent-tabs-mode)
-(add-hook 'lisp-mode-hook #'turn-off-indent-tabs-mode)
-(add-hook 'emacs-lisp-mode-hook #'turn-off-indent-tabs-mode)
-(add-hook 'rustic-mode-hook #'turn-off-indent-tabs-mode)
-(add-hook 'qml-mode-hook #'turn-off-indent-tabs-mode)
-
-(defun set-tab-width (width)
-  (setq tab-width width))
-(add-hook 'rustic-mode-hook (apply-partially #'set-tab-width 4))
-(add-hook 'qml-mode-hook (apply-partially #'set-tab-width 4))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
