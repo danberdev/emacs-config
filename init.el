@@ -449,6 +449,11 @@
 ;; Easy unfilling
 (define-key global-map "\M-Q" 'unfill-paragraph)
 
+;; Org-mode niceties
+(global-set-key (kbd "C-c l") #'org-store-link)
+(global-set-key (kbd "C-c a") #'org-agenda)
+(global-set-key (kbd "C-c c") #'org-capture)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
