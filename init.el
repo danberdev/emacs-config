@@ -297,6 +297,9 @@
 ;; Delete all trailing whitespaces, these don't belong to my files
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+;; 100 is a more sane fill setting for 21st century
+(setq-default fill-column 100)
+
 ;; Ignore case for completion
 (setq completion-ignore-case t)
 (setq read-buffer-completion-ignore-case t)
