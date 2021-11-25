@@ -370,10 +370,6 @@
 ;; with the frame size
 ;; (add-hook 'window-setup-hook 'toggle-frame-maximized t)
 
-;; Appearence - parentheses highlight
-;; Show matching parentheses and do it without a delay
-(show-paren-mode 1)
-
 ;; We don't really need startup screen
 (setq inhibit-startup-screen t)
 
