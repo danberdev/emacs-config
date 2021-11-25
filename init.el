@@ -344,6 +344,17 @@
                    (buffer-substring-no-properties (point-min) (point-max))))
          (current-buffer)))
 
+;;;;;;;;;;;;;;;;;;;;;;;
+;; Org Mode settings ;;
+;;;;;;;;;;;;;;;;;;;;;;;
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((C . t)
+   (python . t)
+   (shell . t)))
+
+(add-hook 'org-mode-hook (org-toggle-pretty-entities))
+(setq org-use-sub-superscripts "{}")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;        Appearence       ;;
