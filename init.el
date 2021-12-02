@@ -126,6 +126,8 @@
 (use-package yaml-mode)
 (use-package dockerfile-mode)
 (use-package docker-compose-mode)
+(use-package zig-mode)
+(use-package cmake-mode)
 
 ;; Packages - Color Themes
 (use-package color-theme-solarized)
@@ -158,6 +160,7 @@
          (c++-mode . lsp)
          (go-mode . lsp)
          (rustic-mode . lsp)
+         (zig-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :config (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
   (setq lsp-headerline-breadcrumb-enable nil)

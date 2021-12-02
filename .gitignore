@@ -21,3 +21,4 @@ games/
 eln-cache
 straight/
 .cache/
+.extension/
