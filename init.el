@@ -139,7 +139,7 @@
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 
 (use-package flycheck
-  :commands global-flycheck-mode)
+  :init (global-flycheck-mode))
 (use-package flycheck-inline)
 
 (use-package flycheck-color-mode-line
@@ -236,6 +236,10 @@
   (add-hook 'c-mode-common-hook (lambda () #'(local-set-key  (kbd "C-i") 'clang-format)))
   :hook (c-mode-common . clang-format+-mode))
 
+;; Comms
+;; Gopher/gemini client
+(use-package elpher)
+
 ;; Packages — games
 (use-package chess)
 (use-package gnugo)
@@ -330,6 +334,8 @@
   (setq tab-width width))
 (add-hook 'rustic-mode-hook (apply-partially #'set-tab-width 4))
 (add-hook 'qml-mode-hook (apply-partially #'set-tab-width 4))
+
+(setq js-indent-level 2)
 
 (global-set-key "\C-m" 'newline-and-indent)
 
